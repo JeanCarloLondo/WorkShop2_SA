@@ -1,10 +1,20 @@
 const spring = require('../services/spring.client');
+const photos = require('../data/refereePhotos.json');
 
 exports.dashboard = async (req, res) => {
   try {
-    const data = await spring.getDashboard(req.params.id);
+    const id = parseInt(req.params.id);
+    const data = await spring.getDashboard(id);
+
+    // search for photo
+    const match = photos.find(p => p.id === id);
+    if (match) {
+      data.referee.photoUrl = match.photoUrl;
+    }
+
     res.json(data);
   } catch (err) {
+    console.error(err.message);
     res.status(500).json({ error: 'Error fetching dashboard' });
   }
 };
