@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const { PORT } = require('./config');
-const refereeRoutes = require('./routes/referee.routes');
 const setupSwagger = require('./utils/swagger');
 
 const app = express();
@@ -11,6 +10,7 @@ app.use(helmet());
 app.use(express.json());
 
 // routes
+const refereeRoutes = require('./routes/referee.routes');
 app.use('/referees', refereeRoutes);
 
 // healthcheck
